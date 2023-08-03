@@ -2,7 +2,6 @@ package com.bharath.musicplayerforbaby.presentation
 
 import android.support.v4.media.MediaMetadataCompat
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -36,7 +35,6 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -46,7 +44,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -87,7 +84,7 @@ fun MusicListScreen(
     musicListViewModel: MusicListViewModel = hiltViewModel(),
 ) {
 
-    val songs = musicListViewModel.detailSongList.collectAsState()
+    val songs = musicListViewModel.dynamicSortedList.collectAsState()
     val settinglist = musicListViewModel.isSettingSortBy.collectAsState()
     val nsongs = songs.value
 
@@ -158,7 +155,7 @@ fun MusicListScreen(
                     }
                 },
                 content = { padding ->
-                    val scaffoldstateSort = rememberBottomSheetScaffoldState()
+
 
 
 
@@ -176,11 +173,7 @@ fun MusicListScreen(
                             Text(
                                 text = "Date Modified",
                                 fontWeight = FontWeight.Bold,
-                                modifier = Modifier.alpha(0.7f).clickable {
-                                                                          scope.launch {
-                                                                              scaffoldstateSort.bottomSheetState.show()
-                                                                          }
-                                },
+                                modifier = Modifier.alpha(0.7f),
                                 fontSize = 14.sp
                             )
 
@@ -193,7 +186,7 @@ fun MusicListScreen(
                                     IconButton(onClick = {
 
                                         val start = 0
-                                        val end = songs.value.size ?: 0
+                                        val end = songs.value.size
                                         val randm = (start..end).random()
                                         musicListViewModel.playOrToggleTheSong(
                                             songs.value[randm],

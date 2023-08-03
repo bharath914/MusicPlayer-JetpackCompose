@@ -12,11 +12,19 @@ import androidx.lifecycle.MutableLiveData
 import com.bharath.musicplayerforbaby.other.Const.NETWORK_ERROR
 import com.bharath.musicplayerforbaby.other.Event
 import com.bharath.musicplayerforbaby.other.Resource
+import com.google.android.exoplayer2.SimpleExoPlayer
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import javax.inject.Inject
 
 
 class MusicServiceConnection (
-    context:Context
+    context:Context,
+
         ) {
+
+
+
 
     private val _isConnected = MutableLiveData<Event<Resource<Boolean>>>()
     val isConnected :LiveData<Event<Resource<Boolean>>> = _isConnected
@@ -25,12 +33,12 @@ class MusicServiceConnection (
     val networkError :LiveData<Event<Resource<Boolean>>> = _networkError
 
 
-    private val _playBackState = MutableLiveData<PlaybackStateCompat ? >()
-    val playBackState :LiveData<PlaybackStateCompat?> = _playBackState
+    private val _playBackState = MutableStateFlow<PlaybackStateCompat ? >(PlaybackStateCompat.Builder().build())
+    val playBackState :StateFlow<PlaybackStateCompat?> = _playBackState
 
 
-    private val _curPlayingSong = MutableLiveData<MediaMetadataCompat ? >()
-    val curPlayingSong :LiveData<MediaMetadataCompat? > = _curPlayingSong
+    private val _curPlayingSong = MutableStateFlow<MediaMetadataCompat ? >(MediaMetadataCompat.Builder().build())
+    val curPlayingSong :StateFlow<MediaMetadataCompat? > = _curPlayingSong
 
     lateinit var mediaController :MediaControllerCompat
 
@@ -50,6 +58,8 @@ class MusicServiceConnection (
 
     val transportControls: MediaControllerCompat.TransportControls
         get()= mediaController.transportControls
+
+
 
 
     fun subscribe(parentId :String, callback:MediaBrowserCompat.SubscriptionCallback){
@@ -85,12 +95,13 @@ class MusicServiceConnection (
     }
     private inner class MediaControllerCallback : MediaControllerCompat.Callback(){
         override fun onPlaybackStateChanged(state: PlaybackStateCompat?) {
-            _playBackState.postValue(state)
+            _playBackState.tryEmit(state)
+
         }
 
         override fun onMetadataChanged(metadata: MediaMetadataCompat?) {
 
-        _curPlayingSong.postValue(metadata)
+        _curPlayingSong.tryEmit(metadata)
         }
 
         override fun onSessionEvent(event: String?, extras: Bundle?) {

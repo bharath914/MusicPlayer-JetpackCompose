@@ -8,7 +8,6 @@ class MusicRepository @Inject constructor(
 
 
     suspend fun getAllSongs():List<Song> = localAudio.getAllSongsInDevice()
-
-
+    suspend fun getAllSongDetails ():MutableList<DetailSong> = localAudio.getSongsWithMoreDetails()
 
 }

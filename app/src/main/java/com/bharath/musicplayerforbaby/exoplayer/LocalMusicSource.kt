@@ -4,6 +4,7 @@ import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaBrowserCompat.MediaItem.FLAG_PLAYABLE
 import android.support.v4.media.MediaDescriptionCompat
 import android.support.v4.media.MediaMetadataCompat
+import android.support.v4.media.MediaMetadataCompat.METADATA_KEY_ALBUM_ARTIST
 import android.support.v4.media.MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI
 import android.support.v4.media.MediaMetadataCompat.METADATA_KEY_ARTIST
 import android.support.v4.media.MediaMetadataCompat.METADATA_KEY_DISPLAY_DESCRIPTION
@@ -15,6 +16,9 @@ import android.support.v4.media.MediaMetadataCompat.METADATA_KEY_MEDIA_ID
 import android.support.v4.media.MediaMetadataCompat.METADATA_KEY_MEDIA_URI
 import android.support.v4.media.MediaMetadataCompat.METADATA_KEY_TITLE
 import androidx.core.net.toUri
+import com.bharath.musicplayerforbaby.data.DetailSong
+import com.bharath.musicplayerforbaby.data.LocalAudio
+import com.bharath.musicplayerforbaby.data.LocalAudioInDetail
 import com.bharath.musicplayerforbaby.data.MusicRepository
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.source.ConcatenatingMediaSource
@@ -25,14 +29,15 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class LocalMusicSource @Inject constructor(
-    private val musicDataBase: MusicRepository,
+    private val musicDataBase: LocalAudioInDetail,
 ) {
 
+    var allSongs = listOf<DetailSong>()
     var songs = emptyList<MediaMetadataCompat>()
 
     suspend fun fetchMediaData() = withContext(Dispatchers.Main) {
         state = State.STATE_INITIALIZING
-        val allSongs = musicDataBase.getAllSongs()
+         allSongs = musicDataBase.getSongsWithMoreDetails()
 
         songs = allSongs.map { song ->
             MediaMetadataCompat.Builder()
@@ -45,6 +50,8 @@ class LocalMusicSource @Inject constructor(
                 .putString(METADATA_KEY_DISPLAY_ICON_URI, song.imageUrl)
                 .putString(METADATA_KEY_DISPLAY_SUBTITLE, song.subtitle)
                 .putString(METADATA_KEY_DISPLAY_DESCRIPTION, song.subtitle)
+                .putString(METADATA_KEY_ALBUM_ARTIST,song.albumartist)
+
 
                 .build()
         }

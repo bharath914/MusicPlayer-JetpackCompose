@@ -8,11 +8,14 @@ import android.support.v4.media.MediaBrowserCompat.SubscriptionCallback
 import android.support.v4.media.MediaMetadataCompat.METADATA_KEY_MEDIA_ID
 import android.support.v4.media.session.PlaybackStateCompat.SHUFFLE_MODE_ALL
 import android.support.v4.media.session.PlaybackStateCompat.SHUFFLE_MODE_NONE
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bharath.musicplayerforbaby.data.DetailSong
 import com.bharath.musicplayerforbaby.data.DurationAndOther
-import com.bharath.musicplayerforbaby.exoplayer.LocalMusicSource
+import com.bharath.musicplayerforbaby.data.LocalAudio
+import com.bharath.musicplayerforbaby.data.LocalAudioInDetail
 import com.bharath.musicplayerforbaby.exoplayer.MusicServiceConnection
 import com.bharath.musicplayerforbaby.exoplayer.currentPlaybackPosition
 import com.bharath.musicplayerforbaby.exoplayer.isPlayEnabled
@@ -40,13 +43,15 @@ import javax.inject.Inject
 class MusicListViewModel
 @Inject constructor(
     private val musicServiceConnection: MusicServiceConnection,
-    private val localMusicSource: LocalMusicSource,
+    private val localMusicSource: LocalAudio,
 
     ) :
     ViewModel() {
     private val _detailSong = MutableStateFlow(emptyList<DetailSong>())
     val detailSongList: StateFlow<List<DetailSong>> = _detailSong
 
+    private val _detailSongLive = MutableLiveData(emptyList<DetailSong>())
+    val detailSongListLive: LiveData<List<DetailSong>> = _detailSongLive
 
     private val _searchText = MutableStateFlow("")
     val searchText = _searchText.asStateFlow()
@@ -88,53 +93,35 @@ class MusicListViewModel
     @OptIn(FlowPreview::class)
     val dynamicSortedList = isSettingSortByValue.onEach { _isSettingSortBy.update { true } }
         .debounce(250L)
-        .combine(_detailSong){cons,song->
-            when(cons){
-                0 ->{
+        .combine(_detailSong) { cons, song ->
+            when (cons) {
+                0 -> {
                     _detailSong.value.sortedBy {
-it.dateModified
+                        it.dateModified
                     }
                 }
-                1 ->{
+
+                1 -> {
                     _detailSong.value.sortedBy {
                         it.dateModified
                     }.reversed()
                 }
-                2 ->{
+
+                2 -> {
                     _detailSong.value.sortedBy {
                         it.title
 
                     }
                 }
-                else->{
+
+                else -> {
                     _detailSong.value
                 }
             }
 
         }.onEach {
             _isSettingSortBy.update { false }
-        }.stateIn(viewModelScope,SharingStarted.WhileSubscribed(2000),_detailSong.value)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(2000), _detailSong.value)
 
 
     private val _durationOfTheSong = MutableStateFlow(0L)
@@ -162,7 +149,10 @@ it.dateModified
     }
 
     init {
+        viewModelScope.launch {
 
+           _detailSongLive.postValue(localMusicSource.getSongsWithMoreDetails())
+        }
         musicServiceConnection.subscribe(Const.MEDIA_ROOT_ID, object : SubscriptionCallback() {
 
 
@@ -172,7 +162,9 @@ it.dateModified
             ) {
                 super.onChildrenLoaded(parentId, children)
 
-                _detailSong.tryEmit(localMusicSource.allSongs)
+
+//                _detailSong.tryEmit(localMusicSource.allSongs)
+
 
             }
         })

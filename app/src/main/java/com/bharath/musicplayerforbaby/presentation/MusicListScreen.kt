@@ -84,7 +84,7 @@ fun MusicListScreen(
     musicListViewModel: MusicListViewModel = hiltViewModel(),
 ) {
 
-    val songs = musicListViewModel.dynamicSortedList.collectAsState()
+    val songs = musicListViewModel.detailSongList.collectAsState()
     val settinglist = musicListViewModel.isSettingSortBy.collectAsState()
     val nsongs = songs.value
 
@@ -225,6 +225,7 @@ fun MusicListScreen(
 
 
 
+                        else{
                             LazyColumn {
 
                                 items(nsongs) {
@@ -234,7 +235,7 @@ fun MusicListScreen(
                                     }
                                     Spacer(modifier = Modifier.height(20.dp))
                                 }
-                            }
+                            }}
 
                     }
                 }, backgroundColor = MaterialTheme.colorScheme.background,

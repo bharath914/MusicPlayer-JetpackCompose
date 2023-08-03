@@ -28,6 +28,9 @@ object AppModule
     @Singleton
     @Provides
     fun provideLocalMusicSource(musicdata:LocalAudioInDetail) = LocalMusicSource(musicdata)
+    @Provides
+    @Singleton
+    fun provideLocalAudio(@ApplicationContext context: Context) =LocalAudio(context)
 
     @Singleton
     @Provides

@@ -105,10 +105,9 @@ class LocalAudio(@ApplicationContext val context: Context) {
             MediaStore.Audio.AudioColumns.ALBUM_ID,
             MediaStore.Audio.AudioColumns.DURATION,
             MediaStore.Audio.AudioColumns.SIZE,
-            MediaStore.Audio.AudioColumns.MIME_TYPE,
-            MediaStore.Audio.AudioColumns.BITRATE,
+
             MediaStore.Audio.AudioColumns.ALBUM,
-            MediaStore.Audio.AudioColumns.RESOLUTION,
+
 
 
 
@@ -128,25 +127,23 @@ class LocalAudio(@ApplicationContext val context: Context) {
                     val artistIDColumn =
                         cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.ARTIST)
                     val durationColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.DURATION)
-                    val mimeColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.MIME_TYPE)
-                    val sizeColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.SIZE)
+
                     val albumColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.ALBUM)
                     val bitrateC = cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.BITRATE)
-                    val samplingC = cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.RESOLUTION)
+
 
                     while (cursor.moveToNext()) {
                         val id = cursor.getLong(idColumn)
                         val title = cursor.getString(nameColumn)
                         val duration = cursor.getLong(durationColumn)
-                        val mimeC = cursor.getString(mimeColumn)
-                        val sizeC = cursor.getLong(sizeColumn)
+
                         val albumC = cursor.getString(albumColumn)
                         val bitrate = cursor.getLong(bitrateC)
 
 
                         val artist = cursor.getString(artistIDColumn)
                         val albumId = cursor.getLong(albumIdColumn)
-                        val sampling =cursor.getLong(samplingC)
+
 
 
                         val uri =
@@ -171,8 +168,7 @@ class LocalAudio(@ApplicationContext val context: Context) {
                             duration = duration,
                             albumName = albumC,
                             bitrate = bitrate.toString(),
-                            size = sizeC.toString(),
-                            mimeType = mimeC,
+
 
                         )
                         detailsongs.add(song)

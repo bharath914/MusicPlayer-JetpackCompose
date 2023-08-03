@@ -83,9 +83,9 @@ import javax.inject.Singleton
 @InstallIn(ServiceComponent::class)
 object ServiceModule {
 
-    @Provides
-    @ServiceScoped
-    fun provideMusicDatabase(localAudio: LocalAudio) = MusicRepository(localAudio)
+//    @Provides
+//    @ServiceScoped
+//    fun provideMusicDatabase(localAudio: LocalAudio) = MusicRepository(localAudio)
 
     @Provides
     @ServiceScoped
@@ -94,9 +94,6 @@ object ServiceModule {
         .setUsage(C.USAGE_MEDIA)
         .build()
 
-    @Provides
-    @ServiceScoped
-    fun provideLocalAudio(@ApplicationContext context: Context) =LocalAudio(context)
 
 
     @Provides

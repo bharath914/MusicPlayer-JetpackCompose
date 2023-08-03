@@ -6,12 +6,13 @@ import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.util.Log
+import android.widget.Toast
 import dagger.hilt.android.qualifiers.ApplicationContext
 
 class LocalAudioInDetail (@ApplicationContext val context: Context) {
     private val selection = MediaStore.Audio.Media.IS_MUSIC
     private val sortOrder = MediaStore.Audio.Media.DATE_MODIFIED + " DESC"
-    private val mediaUri = if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
+    private val mediaUri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
         MediaStore.Audio.Media.getContentUri(MediaStore.VOLUME_EXTERNAL)
 
     } else {
@@ -99,14 +100,15 @@ class LocalAudioInDetail (@ApplicationContext val context: Context) {
                             songUrl = uri.toString(),
                             duration = duration,
                             albumName = albumC,
-                            bitrate = bitrate.toString() ?: "",
-                            size = sizeC.toString()?:"",
-                            mimeType = mimeC ?:"",
-
-                            albumartist = albumArtist ?: "",
-                            dateAdded = dateadded ?:"",
-                            dateModified = dateModified ?:""
+//                            bitrate = bitrate.toString() ?: "",
+//                            size = sizeC.toString()?:"",
+//                            mimeType = mimeC ?:"",
+//
+//                            albumartist = albumArtist ?: "",
+//                            dateAdded = dateadded ?:"",
+//                            dateModified = dateModified ?:""
                         )
+
                         detailsongs.add(song)
 
 

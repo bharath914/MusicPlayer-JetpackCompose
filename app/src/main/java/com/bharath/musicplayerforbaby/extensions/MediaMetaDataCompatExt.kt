@@ -1,9 +1,13 @@
-package com.bharath.musicplayerforbaby.exoplayer
+package com.bharath.musicplayerforbaby.extensions
 
 import android.support.v4.media.MediaMetadataCompat
 import com.bharath.musicplayerforbaby.data.DetailSong
-import com.bharath.musicplayerforbaby.data.Song
 
+/*
+This extension classes are used to reduce our work
+for eg: MusicListScreen/Onclick -> we need to map our MediaMetadata to Normal Song Data Class instead
+of doing it everytime we just call this function like : mediaItems.toSong()
+ */
 fun    MediaMetadataCompat.toSong(): DetailSong {
     return description.let {
         DetailSong(

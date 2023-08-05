@@ -4,10 +4,12 @@ import android.app.PendingIntent
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.media.MediaBrowserCompat
+import android.support.v4.media.MediaBrowserCompat.MediaItem
 import android.support.v4.media.MediaDescriptionCompat
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaSessionCompat
 import androidx.media.MediaBrowserServiceCompat
+import com.bharath.musicplayerforbaby.datastore.DataStorePrefRepo
 import com.bharath.musicplayerforbaby.other.Const.MEDIA_ROOT_ID
 import com.bharath.musicplayerforbaby.other.Const.NETWORK_ERROR
 import com.bharath.musicplayerforbaby.exoplayer.callbacks.MusicPlaybackPreparer
@@ -29,8 +31,18 @@ import javax.inject.Inject
 
 private const val SERVICE_TAG = "MusicService"
 
+/*
+This is the Main class in our App this is
+used as the media browser service class
+---> This class will simply connects all the dots
+---> In this class we connect the datasource factory and music notifications fetching songs from the device
+etc.
+study this class clearly and u will understand the entire app architecture
+ */
 @AndroidEntryPoint
 class MusicService : MediaBrowserServiceCompat() {
+
+
 
     @Inject
     lateinit var dataSourceFactory: DefaultDataSourceFactory
@@ -120,8 +132,13 @@ class MusicService : MediaBrowserServiceCompat() {
     ){
         val currSongIndex = if (curPlayingSong == null)0 else songs.indexOf(itemToPlay)
         exoplayer.prepare(  localMusicSource.asMediaSource(dataSourceFactory))
+
         exoplayer.seekTo(currSongIndex,0L)
         exoplayer.playWhenReady = playNow
+    }
+
+    fun reArrangeMediaItems(list:MutableList<com.google.android.exoplayer2.MediaItem>){
+        exoplayer.replaceMediaItems(0,list.size,list)
     }
 
     override fun onTaskRemoved(rootIntent: Intent?) {

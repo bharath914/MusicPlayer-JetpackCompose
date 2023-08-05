@@ -4,7 +4,9 @@ import android.util.Log
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-
+/*
+Simple formatters
+ */
 fun convertToTime(l: Long): String {
     val formatStr = SimpleDateFormat("mm:ss", Locale.getDefault())
     val str = formatStr.format(l)

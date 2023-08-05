@@ -18,6 +18,11 @@ import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 
+/*
+We need a connector for our music service because it is a service class
+so we need a connector to function it properly
+This connector will be attached to the MainViewModel and it is used for updating the UI
+ */
 class MusicServiceConnection (
     context:Context,
 
@@ -55,6 +60,7 @@ class MusicServiceConnection (
     ).apply {
         connect()
     }
+
 
     val transportControls: MediaControllerCompat.TransportControls
         get()= mediaController.transportControls

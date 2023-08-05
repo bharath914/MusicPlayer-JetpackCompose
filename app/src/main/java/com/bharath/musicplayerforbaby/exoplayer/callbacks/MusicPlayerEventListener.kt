@@ -5,6 +5,12 @@ import com.bharath.musicplayerforbaby.exoplayer.MusicService
 import com.google.android.exoplayer2.PlaybackException
 import com.google.android.exoplayer2.Player
 
+
+/*
+We use this class for updating the playerstate
+If any error occurs while playing the song this class will help us to catch the error
+
+ */
 class   MusicPlayerEventListener(
     private val musicService: MusicService
 ):Player.Listener {

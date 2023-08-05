@@ -1,5 +1,8 @@
 package com.bharath.musicplayerforbaby.data
 
+/*
+Data class to store our song details in the list
+ */
 data class DetailSong (
     val mediaId :String = "",
     val title:String ="",
@@ -17,6 +20,9 @@ data class DetailSong (
     val dateModified :String= "",
 
         ){
+    /*
+    This function is very helpful for search queries
+     */
     fun deosMatchSearchQuery(query:String) :Boolean{
         val mathcingCombinations  = listOf(
             "$title$subtitle",
@@ -30,6 +36,9 @@ data class DetailSong (
     }
 }
 
+/*
+For storing the extra details of the song
+ */
 data class DurationAndOther(
     val duration :Long,
     val bitrate: String,

@@ -1,9 +1,14 @@
-package com.bharath.musicplayerforbaby.exoplayer
+package com.bharath.musicplayerforbaby.extensions
 
 import android.os.SystemClock
 import android.support.v4.media.session.PlaybackStateCompat
 import android.support.v4.media.session.PlaybackStateCompat.STATE_PLAYING
 
+/*
+This variables will be inlined to the playback state
+this states are used getting the exoplayer current state
+this is very useful for updating the song duration and onclick in lazycolumn to play the song etc..
+ */
 inline val PlaybackStateCompat.isPrepared
     get() = state ==PlaybackStateCompat.STATE_BUFFERING ||
             state == PlaybackStateCompat.STATE_PLAYING ||

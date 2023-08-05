@@ -5,14 +5,29 @@ import android.os.Bundle
 import android.os.ResultReceiver
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.PlaybackStateCompat
+import com.bharath.musicplayerforbaby.datastore.DataStorePrefRepo
 import com.bharath.musicplayerforbaby.exoplayer.LocalMusicSource
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+
+/*
+This class will prepare the music playback
+using the media id of the song
+This class will take care of the playback like when the app is launched which song should be on the notification bar etc
+it will return null when the app launched
+and then it will searches song by using mediaId
+ */
 class MusicPlaybackPreparer (
     private val localMusicSource: LocalMusicSource,
     private val playerPrepared : (MediaMetadataCompat?) -> Unit
         ) :MediaSessionConnector.PlaybackPreparer{
+
     override fun onCommand(
         player: Player,
         command: String,
@@ -28,8 +43,12 @@ class MusicPlaybackPreparer (
 
     override fun onPrepareFromMediaId(mediaId: String, playWhenReady: Boolean, extras: Bundle?) {
        localMusicSource.whenReady {
+
+
            val itemToPlay=localMusicSource.songs.find {
+
                mediaId == it.description.mediaId
+
            }
            playerPrepared(itemToPlay)
        }

@@ -41,8 +41,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bharath.musicplayerforbaby.R
-import com.bharath.musicplayerforbaby.exoplayer.isPlaying
-import com.bharath.musicplayerforbaby.exoplayer.toSong
+import com.bharath.musicplayerforbaby.extensions.isPlaying
+import com.bharath.musicplayerforbaby.extensions.toSong
 import com.bharath.musicplayerforbaby.extensions.convertMillisecondsToMinutesAndSeconds
 import com.bharath.musicplayerforbaby.extensions.convertToKbps
 import com.bharath.musicplayerforbaby.extensions.formatMimeType
@@ -167,12 +167,12 @@ fun Part2NowPlaying() {
     val playBackState = vm.playbackstate.collectAsState()
     val curPlaySong = vm.curplayingSong.collectAsState()
     val shuffleEnabled = vm.isShuffleMode.collectAsState()
-    val duration = vm.durationOfTheSong.collectAsState()
+
     val timeline = vm.currDurationOfTheSong.collectAsState(initial = 0L)
     val iconState = remember {
         mutableStateOf(R.drawable.outline_play_circle_filled_24)
     }
-    val extraDetails = vm.detailsofthesong.collectAsState()
+    val extraDetails = vm.detailsOfTheSong.collectAsState()
     playBackState.value?.let {
         if (it.isPlaying) {
             iconState.value = R.drawable.outline_pause_circle_filled_24
@@ -280,9 +280,9 @@ fun Part2NowPlaying() {
 
 
             Slider(
-                value = 1f,
+                value = timeline.value.toFloat(),
                 onValueChange = {
-
+                                vm.seekTo(it.toLong())
                 },
                 colors = SliderDefaults.colors(
                     thumbColor = MaterialTheme.colorScheme.onSurface,
@@ -291,7 +291,7 @@ fun Part2NowPlaying() {
                 ),
 
 
-                valueRange = 0f..25f,
+                valueRange = 0f..extraDetails.value.duration.toFloat(),
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(18.dp)
@@ -309,7 +309,7 @@ fun Part2NowPlaying() {
                     style = MaterialTheme.typography.labelLarge
                 )
                 Text(
-                    text = convertMillisecondsToMinutesAndSeconds(duration.value),
+                    text = convertMillisecondsToMinutesAndSeconds(extraDetails.value.duration   ),
                     style = MaterialTheme.typography.labelLarge
                 )
             }

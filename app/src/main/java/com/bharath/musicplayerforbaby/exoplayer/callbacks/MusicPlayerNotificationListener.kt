@@ -8,6 +8,12 @@ import com.bharath.musicplayerforbaby.other.Const
 
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
 
+/*
+This class basically will have the two methods onNotification cancelled and onNotificationPosted
+these two methods will help us in maintaining the notification properly
+eg : Notification will be cleared when the user swipe the notification in notification bar (if not song is playing)
+
+ */
 class MusicPlayerNotificationListener(
         private val musicService: MusicService
 ):PlayerNotificationManager.NotificationListener {

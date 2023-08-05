@@ -2,9 +2,9 @@ package com.bharath.musicplayerforbaby.di
 
 import android.content.Context
 import com.bharath.musicplayerforbaby.R
-import com.bharath.musicplayerforbaby.data.LocalAudio
 import com.bharath.musicplayerforbaby.data.LocalAudioInDetail
 import com.bharath.musicplayerforbaby.data.MusicRepository
+import com.bharath.musicplayerforbaby.datastore.DataStorePrefRepo
 import com.bharath.musicplayerforbaby.exoplayer.LocalMusicSource
 import com.bharath.musicplayerforbaby.exoplayer.MusicServiceConnection
 import com.bumptech.glide.Glide
@@ -14,7 +14,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.android.scopes.ServiceScoped
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -27,11 +26,11 @@ object AppModule
     fun provideMusicServiceConnection(@ApplicationContext context: Context) = MusicServiceConnection(context)
     @Singleton
     @Provides
-    fun provideLocalMusicSource(musicdata:LocalAudioInDetail) = LocalMusicSource(musicdata)
-    @Provides
-    @Singleton
-    fun provideLocalAudio(@ApplicationContext context: Context) =LocalAudio(context)
+    fun provideLocalMusicSource(musicdata:MusicRepository) = LocalMusicSource(musicdata)
 
+    @Singleton
+    @Provides
+    fun provideDataStorePref(@ApplicationContext context: Context) = DataStorePrefRepo(context)
     @Singleton
     @Provides
     fun provideGlideInstance(@ApplicationContext context: Context)= Glide.with(context).setDefaultRequestOptions(

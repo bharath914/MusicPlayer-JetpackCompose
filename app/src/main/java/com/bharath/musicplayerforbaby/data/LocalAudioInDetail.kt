@@ -7,11 +7,27 @@ import android.os.Build
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
+import com.bharath.musicplayerforbaby.datastore.DataStorePrefRepo
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
-class LocalAudioInDetail (@ApplicationContext val context: Context) {
+/*
+This class will use content resolver which is android's tool to get the required content from the
+device
+ */
+class LocalAudioInDetail (
+    @ApplicationContext val context: Context
+
+    ) {
+    // selection is nothing but instead of voice recording and ringtones we only select the music files
     private val selection = MediaStore.Audio.Media.IS_MUSIC
+    // sort order for our songs
     private val sortOrder = MediaStore.Audio.Media.DATE_MODIFIED + " DESC"
+    // media uri just the path to where the cursor needs to search for the songs
     private val mediaUri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
         MediaStore.Audio.Media.getContentUri(MediaStore.VOLUME_EXTERNAL)
 
@@ -19,7 +35,10 @@ class LocalAudioInDetail (@ApplicationContext val context: Context) {
         MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
     }
 
-    fun getSongsWithMoreDetails(): MutableList<DetailSong> {
+
+
+//function to search songs in the device
+     fun getSongsWithMoreDetails(): MutableList<DetailSong> {
         val projectionDetail = arrayOf(
             MediaStore.Audio.AudioColumns._ID,
             MediaStore.Audio.AudioColumns.TITLE,
@@ -28,7 +47,7 @@ class LocalAudioInDetail (@ApplicationContext val context: Context) {
             MediaStore.Audio.AudioColumns.DURATION,
             MediaStore.Audio.AudioColumns.SIZE,
             MediaStore.Audio.AudioColumns.MIME_TYPE,
-            MediaStore.Audio.AudioColumns.BITRATE,
+
             MediaStore.Audio.AudioColumns.ALBUM,
             MediaStore.Audio.AudioColumns.ALBUM_ARTIST,
             MediaStore.Audio.AudioColumns.DATE_ADDED,
@@ -38,9 +57,17 @@ class LocalAudioInDetail (@ApplicationContext val context: Context) {
 
             )
         val detailsongs: MutableList<DetailSong> = mutableListOf()
+    // now study this class carefully
         try {
             context.contentResolver?.query(mediaUri, projectionDetail, selection, null, sortOrder)
                 .use { cursor ->
+                    /*
+                    In Your device If you download any song the song metadata will be stored in different
+                    columns just like the normal database
+                    so we need a tool called cursor for searching these data base queries
+                    first we provide each column to the cursor and then we add the details in that particular
+                    column
+                     */
 
                     val idColumn = cursor!!.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns._ID)
                     val nameColumn =
@@ -55,12 +82,13 @@ class LocalAudioInDetail (@ApplicationContext val context: Context) {
                     val mimeColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.MIME_TYPE)
                     val sizeColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.SIZE)
                     val albumColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.ALBUM)
-                    val bitrateC = cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.BITRATE)
+//                    val bitrateC = cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.BITRATE)
 
                     val albumArtistColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.ALBUM_ARTIST)
                     val dateAddedColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.DATE_ADDED)
                     val dateModifiedColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.DATE_MODIFIED)
 
+                    // if the cursor have the next row to search
                     while (cursor.moveToNext()) {
                         val id = cursor.getLong(idColumn)
                         val title = cursor.getString(nameColumn)
@@ -68,7 +96,7 @@ class LocalAudioInDetail (@ApplicationContext val context: Context) {
                         val mimeC = cursor.getString(mimeColumn)
                         val sizeC = cursor.getLong(sizeColumn)
                         val albumC = cursor.getString(albumColumn)
-                        val bitrate = cursor.getLong(bitrateC)
+//                        val bitrate = cursor.getLong(bitrateC)
 
 
                         val artist = cursor.getString(artistIDColumn)
@@ -101,12 +129,12 @@ class LocalAudioInDetail (@ApplicationContext val context: Context) {
                             duration = duration,
                             albumName = albumC,
 //                            bitrate = bitrate.toString() ?: "",
-//                            size = sizeC.toString()?:"",
-//                            mimeType = mimeC ?:"",
-//
-//                            albumartist = albumArtist ?: "",
-//                            dateAdded = dateadded ?:"",
-//                            dateModified = dateModified ?:""
+                            size = sizeC.toString()?:"",
+                            mimeType = mimeC ?:"",
+
+                            albumartist = albumArtist ?: "",
+                            dateAdded = dateadded ?:"",
+                            dateModified = dateModified ?:""
                         )
 
                         detailsongs.add(song)

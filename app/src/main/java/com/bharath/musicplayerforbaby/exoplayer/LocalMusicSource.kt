@@ -11,13 +11,11 @@ import android.support.v4.media.MediaMetadataCompat.METADATA_KEY_DISPLAY_DESCRIP
 import android.support.v4.media.MediaMetadataCompat.METADATA_KEY_DISPLAY_ICON_URI
 import android.support.v4.media.MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE
 import android.support.v4.media.MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE
-import android.support.v4.media.MediaMetadataCompat.METADATA_KEY_DURATION
 import android.support.v4.media.MediaMetadataCompat.METADATA_KEY_MEDIA_ID
 import android.support.v4.media.MediaMetadataCompat.METADATA_KEY_MEDIA_URI
 import android.support.v4.media.MediaMetadataCompat.METADATA_KEY_TITLE
 import androidx.core.net.toUri
 import com.bharath.musicplayerforbaby.data.DetailSong
-import com.bharath.musicplayerforbaby.data.LocalAudio
 import com.bharath.musicplayerforbaby.data.LocalAudioInDetail
 import com.bharath.musicplayerforbaby.data.MusicRepository
 import com.google.android.exoplayer2.MediaItem
@@ -28,16 +26,25 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+
+/*
+This is actually not needed for local music
+but in future scope like updating to cloud storage this will be very helpful
+ */
 class LocalMusicSource @Inject constructor(
-    private val musicDataBase: LocalAudioInDetail,
+    private val musicDataBase: MusicRepository,
 ) {
 
     var allSongs = listOf<DetailSong>()
     var songs = emptyList<MediaMetadataCompat>()
 
+    /*
+    We fetch all the songs in the device and map them as a mediametadatacompat objects
+
+     */
     suspend fun fetchMediaData() = withContext(Dispatchers.Main) {
         state = State.STATE_INITIALIZING
-         allSongs = musicDataBase.getSongsWithMoreDetails()
+         allSongs = musicDataBase.getAllSongDetails()
 
         songs = allSongs.map { song ->
             MediaMetadataCompat.Builder()
@@ -59,6 +66,9 @@ class LocalMusicSource @Inject constructor(
 
     }
 
+    /*
+    This will create  a continuous data source by concatenating each and every mediaid
+     */
     fun asMediaSource(dataSourceFactory: DefaultDataSourceFactory): ConcatenatingMediaSource {
         val concatenatingMediaSource = ConcatenatingMediaSource()
         songs.forEach { song ->
@@ -71,6 +81,11 @@ class LocalMusicSource @Inject constructor(
         return concatenatingMediaSource
     }
 
+    /*
+    This method is also optional if you have an extension funtion and provided it in the
+    mediametadata extension class
+    you can use that as well
+     */
     fun asMediaItems() = songs.map {song->
         val desc= MediaDescriptionCompat.Builder()
             .setMediaId(song.description.mediaId)
@@ -100,6 +115,12 @@ class LocalMusicSource @Inject constructor(
             }
         }
 
+
+    /*
+    Simply it returns true if only the songs are fetched from the device
+    if this function is not used in then our app will be buggy and crashes when we launch it in lower end devices
+
+     */
     fun whenReady(action: (Boolean) -> Unit): Boolean {
         if (state == State.STATE_CREATED || state == State.STATE_INITIALIZING) {
             onReadyListeners += action
@@ -111,6 +132,9 @@ class LocalMusicSource @Inject constructor(
     }
 }
 
+/*
+Sealed class can be used here
+ */
 enum class State {
     STATE_CREATED,
     STATE_INITIALIZING,

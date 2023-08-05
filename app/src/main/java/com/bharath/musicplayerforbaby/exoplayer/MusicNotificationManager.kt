@@ -17,6 +17,12 @@ import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
 import com.google.android.exoplayer2.ui.PlayerNotificationManager.NotificationListener
 
+
+/*
+This is the main class for music notifications this
+will be used to change the music notification style
+customize it on your own
+ */
 class MusicNotificationManager (
     private val context : Context,
     sessionToken:MediaSessionCompat.Token,

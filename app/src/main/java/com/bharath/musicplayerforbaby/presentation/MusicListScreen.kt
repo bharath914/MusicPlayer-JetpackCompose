@@ -60,6 +60,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -68,8 +69,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bharath.musicplayerforbaby.R
 import com.bharath.musicplayerforbaby.data.DetailSong
-import com.bharath.musicplayerforbaby.exoplayer.isPlaying
-import com.bharath.musicplayerforbaby.exoplayer.toSong
+import com.bharath.musicplayerforbaby.extensions.isPlaying
+import com.bharath.musicplayerforbaby.extensions.toSong
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -84,7 +85,7 @@ fun MusicListScreen(
     musicListViewModel: MusicListViewModel = hiltViewModel(),
 ) {
 
-    val songs = musicListViewModel.detailSongList.collectAsState()
+    val songs = musicListViewModel.dynamicSortedList.collectAsState()
     val settinglist = musicListViewModel.isSettingSortBy.collectAsState()
     val nsongs = songs.value
 
@@ -173,7 +174,11 @@ fun MusicListScreen(
                             Text(
                                 text = "Date Modified",
                                 fontWeight = FontWeight.Bold,
-                                modifier = Modifier.alpha(0.7f),
+                                modifier = Modifier
+                                    .alpha(0.7f)
+                                    .clickable {
+                                        musicListViewModel.setSortKey()
+                                    },
                                 fontSize = 14.sp
                             )
 
@@ -263,6 +268,12 @@ fun DrawerContent(onclickDrawerCLose: () -> Unit) {
         IconButton(onClick = { onclickDrawerCLose() }) {
             Icon(Icons.Filled.Close, contentDescription = "")
         }
+        Spacer(modifier = Modifier.height(40.dp))
+        Text(text = buildAnnotatedString {
+            append("Made with ❤️")
+
+            append("by Bharath")
+        },modifier= Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
     }
 }
 

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MusicPlayerForBaby</string>
+    <string name="app_name">Melo Music</string>
     <string name="notification_channel_name">Music Channel</string>
     <string name="channel_description">Displays Current Song\n</string>
 </resources>

@@ -50,16 +50,10 @@ In simple words **Model** stands for the type of data
 
 
 
-![Main Ui](https://github.com/bharath914/MusicPlayer-JetpackCompose/assets/98139751/6d02f155-8bbb-4cd5-9a44-5e8111111e14)
+![mockup1 (Medium)](https://github.com/bharath914/MusicPlayer-JetpackCompose/assets/98139751/b9dcb31c-d3bb-48a4-bfdd-1e57631c8708)
 
-![Player Ui](https://github.com/bharath914/MusicPlayer-JetpackCompose/assets/98139751/ac10c005-e763-4599-b27e-ea4ee4a26811)
 
-![dark Mode](https://github.com/bharath914/MusicPlayer-JetpackCompose/assets/98139751/0ba2a9e5-c3fe-4983-bff1-77d99d15aaef)
 
-![Dark Player UI](https://github.com/bharath914/MusicPlayer-JetpackCompose/assets/98139751/7e6273f6-6dd9-4e33-8465-61c69c74039b)
 
-## Demo
-
-![]()
 
 

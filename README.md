@@ -53,7 +53,25 @@ In simple words **Model** stands for the type of data
 ![mockup1 (Medium)](https://github.com/bharath914/MusicPlayer-JetpackCompose/assets/98139751/b9dcb31c-d3bb-48a4-bfdd-1e57631c8708)
 
 
+## ✒️Author 
+- Bharath Prakash
+
+- Check out my LinedIn here :     <a href="https://linkedin.com/in/bharath-prakash-g77" target="blank"><img align="center"
+            src="https://img.icons8.com/?size=512&id=108812&format=png" alt="bharath-prakash-g77" height="50"
+            width="50" /></a>
+
+- My Instagram :   <a href="https://instagram.com/_bharath914_" target="blank"><img align="center"
+            src="https://img.icons8.com/?size=512&id=TEYr8ETaIfBJ&format=png" alt="_bharath914_" height="50" width="50" /></a>
+## ⚙️How to Use
+- Copy the url of the project and clone it in the Android Studio
 
 
+## Code Language
 
+- Kotlin    <a href="https://kotlinlang.org" target="_blank" rel="noreferrer">
+        <img src="https://www.vectorlogo.zone/logos/kotlinlang/kotlinlang-icon.svg" alt="kotlin" width="20"
+            height="20" />
+    </a>
+
+## 
 

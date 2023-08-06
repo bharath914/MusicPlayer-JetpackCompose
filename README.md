@@ -48,13 +48,16 @@ In simple words **Model** stands for the type of data
 **View** is our UI and **ViewModel** contains the business logic between ui and model and other logic we need
 ## 😎Screenshots
 
-![MainUi](https://github.com/bharath914/MusicPlayer-JetpackCompose/blob/experiment-1/Screenshot_20230806_173034.jpg)
 
-![PlayerUI](https://github.com/bharath914/MusicPlayer-JetpackCompose/blob/experiment-1/Screenshot_20230806_173048.jpg)
 
-![darkMode](https://github.com/bharath914/MusicPlayer-JetpackCompose/blob/experiment-1/Screenshot_20230806_173107.jpg)
+![Main Ui](https://github.com/bharath914/MusicPlayer-JetpackCompose/assets/98139751/6d02f155-8bbb-4cd5-9a44-5e8111111e14)
 
-![darkPlayerUI](https://github.com/bharath914/MusicPlayer-JetpackCompose/blob/experiment-1/Screenshot_20230806_173105.jpg)
+![Player Ui](https://github.com/bharath914/MusicPlayer-JetpackCompose/assets/98139751/ac10c005-e763-4599-b27e-ea4ee4a26811)
+
+![dark Mode](https://github.com/bharath914/MusicPlayer-JetpackCompose/assets/98139751/0ba2a9e5-c3fe-4983-bff1-77d99d15aaef)
+
+![Dark Player UI](https://github.com/bharath914/MusicPlayer-JetpackCompose/assets/98139751/7e6273f6-6dd9-4e33-8465-61c69c74039b)
+
 ## Demo
 
 ![]()

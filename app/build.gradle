@@ -89,7 +89,15 @@ dependencies {
 
     implementation('androidx.compose.material:material-icons-extended:1.4.3')
 
-    implementation('androidx.datastore:datastore-preferences:1.0.0')
+
+    implementation('androidx.palette:palette-ktx:1.0.0')
+    // room
+    implementation "androidx.room:room-runtime:2.5.2"
+    kapt "androidx.room:room-compiler:2.5.2"
+//    implementation('androidx.room:room-coroutines:2.1.0-alpha04')
+
+    // Kotlin Extensions and Coroutines support for Room
+    implementation "androidx.room:room-ktx:2.5.2"
 
 
 }

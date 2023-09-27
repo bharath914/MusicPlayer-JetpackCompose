@@ -2,4 +2,5 @@
     <string name="app_name">Melo Music</string>
     <string name="notification_channel_name">Music Channel</string>
     <string name="channel_description">Displays Current Song\n</string>
+    <string name="webClientId">1057402005141-f647tqc9slj65lrnu48epbrhj7v49kjo.apps.googleusercontent.com</string>
 </resources>

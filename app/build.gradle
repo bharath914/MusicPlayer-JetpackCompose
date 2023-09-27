@@ -3,16 +3,17 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id 'com.google.gms.google-services'
 }
 
 android {
     namespace 'com.bharath.musicplayerforbaby'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.bharath.musicplayerforbaby"
         minSdk 24
-        targetSdk 33
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
@@ -29,17 +30,17 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '17'
     }
     buildFeatures {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion '1.3.2'
+        kotlinCompilerExtensionVersion '1.4.3'
     }
     packagingOptions {
         resources {
@@ -50,9 +51,9 @@ android {
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation 'androidx.core:core-ktx:1.12.0'
     implementation platform('org.jetbrains.kotlin:kotlin-bom:1.8.0')
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.2'
     implementation 'androidx.activity:activity-compose:1.7.2'
     implementation platform('androidx.compose:compose-bom:2022.10.00')
     implementation 'androidx.compose.ui:ui'
@@ -70,24 +71,24 @@ dependencies {
     implementation('androidx.core:core-splashscreen:1.0.1')
 
     // Exoplayer
-    implementation('com.google.android.exoplayer:exoplayer-ui:2.19.0')
-    implementation('com.google.android.exoplayer:extension-mediasession:2.19.0')
-    implementation('com.google.android.exoplayer:exoplayer-core:2.19.0')
-    implementation "com.github.bumptech.glide:compose:1.0.0-alpha.1"
+    implementation('com.google.android.exoplayer:exoplayer-ui:2.19.1')
+    implementation('com.google.android.exoplayer:extension-mediasession:2.19.1')
+    implementation('com.google.android.exoplayer:exoplayer-core:2.19.1')
+    implementation "com.github.bumptech.glide:compose:1.0.0-alpha.5"
 
     implementation 'androidx.compose.runtime:runtime-livedata'
 
     // Dagger Hilt
-    implementation "com.google.dagger:hilt-android:2.46.1"
-    kapt "com.google.dagger:hilt-android-compiler:2.45"
+    implementation "com.google.dagger:hilt-android:2.48"
+    kapt "com.google.dagger:hilt-android-compiler:2.48"
     kapt "androidx.hilt:hilt-compiler:1.0.0"
     implementation 'androidx.hilt:hilt-navigation-compose:1.1.0-alpha01'
-    implementation("io.coil-kt:coil-compose:2.2.2")
+    implementation("io.coil-kt:coil-compose:2.4.0")
     implementation "com.google.accompanist:accompanist-pager:$accompanist_version"
     implementation "com.google.accompanist:accompanist-pager-indicators:$accompanist_version"
     implementation "com.google.accompanist:accompanist-permissions:0.30.1"
 
-    implementation('androidx.compose.material:material-icons-extended:1.4.3')
+    implementation('androidx.compose.material:material-icons-extended:1.5.1')
 
 
     implementation('androidx.palette:palette-ktx:1.0.0')
@@ -98,6 +99,16 @@ dependencies {
 
     // Kotlin Extensions and Coroutines support for Room
     implementation "androidx.room:room-ktx:2.5.2"
+
+
+    // Firebase Features
+    implementation("com.google.firebase:firebase-firestore-ktx:24.8.1")
+    implementation("com.google.firebase:firebase-auth-ktx:22.1.2")
+    implementation("com.google.android.gms:play-services-auth:20.7.0")
+
+
+
+
 
 
 }

@@ -1,0 +1,84 @@
+{
+  "project_info": {
+    "project_number": "1057402005141",
+    "project_id": "project-melo",
+    "storage_bucket": "project-melo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1057402005141:android:153ee7070cbd8c24449d9c",
+        "android_client_info": {
+          "package_name": "com.bharath.musicplayerforbaby"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1057402005141-v7oagil0mohbb53l8ogj69jpvtuk1jaf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bharath.musicplayerforbaby",
+            "certificate_hash": "db148cec34d97bcc796158c2f5bd05fabea3bfc2"
+          }
+        },
+        {
+          "client_id": "1057402005141-f647tqc9slj65lrnu48epbrhj7v49kjo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBd9LXBWW7X0mAAKGmlUrGD8zu_LmHmC_c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1057402005141-f647tqc9slj65lrnu48epbrhj7v49kjo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1057402005141:android:4082778218fbc495449d9c",
+        "android_client_info": {
+          "package_name": "com.bharath.project_meloadmin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1057402005141-rda1ib23m2gv3ad91cjcunuu4hss0umv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bharath.project_meloadmin",
+            "certificate_hash": "db148cec34d97bcc796158c2f5bd05fabea3bfc2"
+          }
+        },
+        {
+          "client_id": "1057402005141-f647tqc9slj65lrnu48epbrhj7v49kjo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBd9LXBWW7X0mAAKGmlUrGD8zu_LmHmC_c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1057402005141-f647tqc9slj65lrnu48epbrhj7v49kjo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -17,6 +17,7 @@ This app is created using kotlin and jetpack compose
 ![Jetpack compose](https://lh3.googleusercontent.com/Ryl7MmrnuqFetWpjTWxeav1ju1pdhmO6D08_qmCsX5YJI6Y0WNjWWqOSgadYMdrMT-Tqx9ypii-_ydQaDDn0TsXIVkHzqFezWGz_xrZ68GzL5JPi887B=w760-h760)
 
 ## 🖥️Tech Stack
+**🔥Firebase :** User Authentication (including two-factor mobile) and cloud storage for storing music files .
 
 **⭐Jetpack compose :**  Android latest ui library that comes from google . It is so much convenient to use JetpackCompose than the old XML files . Try it and you will never regret !
 
@@ -58,7 +59,7 @@ In simple words **Model** stands for the type of data
 ## ✒️Author 
 - Bharath Prakash
 
-- Check out my LinedIn here :     <a href="https://linkedin.com/in/bharath-prakash-g77" target="blank"><img align="center"
+- Check out my LinedIn here :     <a href="www.linkedin.com/in/bharath-ayinala-9b095a294" target="blank"><img align="center"
             src="https://img.icons8.com/?size=512&id=108812&format=png" alt="bharath-prakash-g77" height="50"
             width="50" /></a>
 
